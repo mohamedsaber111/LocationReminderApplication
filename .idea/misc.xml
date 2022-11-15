@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/activity_authentication.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/activity_reminders.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/fragment_reminders.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/fragment_save_reminder.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/fragment_select_location.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/h/Desktop/LocationReminderApplication/app/src/main/res/layout/it_reminder.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
