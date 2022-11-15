@@ -14,9 +14,8 @@ import kotlinx.coroutines.*
  * @param ioDispatcher a coroutine dispatcher to offload the blocking IO tasks
  */
 class RemindersLocalRepository(
-    private val remindersDao: RemindersDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ReminderDataSource {
+    private val remindersDao: RemindersDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO)
+    : ReminderDataSource {
 
     /**
      * Get the reminders list from the local db
