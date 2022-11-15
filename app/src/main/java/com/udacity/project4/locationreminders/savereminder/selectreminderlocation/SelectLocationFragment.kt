@@ -58,6 +58,9 @@ class SelectLocationFragment : BaseFragment() , OnMapReadyCallback {
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(true)
 
+        binding.saveReminderLocation.setOnClickListener {
+            _viewModel.locationSelected(selectMyLocation,selectMyLocationDescription)
+        }
 
         val myMapFragment = childFragmentManager
             .findFragmentById(R.id.fragments_map) as SupportMapFragment
