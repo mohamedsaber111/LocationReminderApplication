@@ -2,6 +2,7 @@ package com.udacity.project4.locationreminders.savereminder.selectreminderlocati
 
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
@@ -11,6 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -38,6 +41,7 @@ class SelectLocationFragment : BaseFragment() , OnMapReadyCallback {
     override val _viewModel: SaveReminderViewModel by inject()
     private lateinit var binding: FragmentSelectLocationBinding
     private lateinit var map: GoogleMap
+
     private var selectMyLocation: LatLng = LatLng(-90.99, 150.50)
     private var selectMyLocationDescription: String? = null
 
@@ -58,6 +62,7 @@ class SelectLocationFragment : BaseFragment() , OnMapReadyCallback {
         val myMapFragment = childFragmentManager
             .findFragmentById(R.id.fragments_map) as SupportMapFragment
         myMapFragment.getMapAsync(this)
+
         return binding.root
     }
 
@@ -67,8 +72,55 @@ class SelectLocationFragment : BaseFragment() , OnMapReadyCallback {
         setLongClick(map)
         setPoiClick(map)
         setStyle(map)
+        accessMyLocation()
     }
 
+    private fun permissionIsGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    val requestPermissionIsLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    accessMyLocation()
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    accessMyLocation()
+                }
+
+                else -> {
+                    Log.i("Permission: ", "is Deny")
+                    Toast.makeText(
+                        context,
+                        "permission wasn't granted.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    @SuppressLint("MissingPermission")
+    private fun accessMyLocation() {
+        if (permissionIsGranted()) {
+            map.isMyLocationEnabled = true
+            Toast.makeText(context, "permission is granted.", Toast.LENGTH_SHORT).show()
+        } else {
+            requestPermissionIsLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+
+                )
+            )
+        }
+    }
     private fun setStyle(map: GoogleMap) {
         try {
             val mapStyle = map.setMapStyle(
