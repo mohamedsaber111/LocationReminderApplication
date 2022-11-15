@@ -95,7 +95,7 @@ class RemindersListViewModelTest {
             MatcherAssert.assertThat(loadedItems[i].title, `is`(DataReminder.items[i].title))
         }
         //showNoData to false
-        MatcherAssert.assertThat(remindersListViewModel.showNoData.getOrAwaitValue(), CoreMatchers.`is`(false))
+        MatcherAssert.assertThat(remindersListViewModel.showNoData.getOrAwaitValue(), `is`(false))
     }
 
 
@@ -112,7 +112,7 @@ class RemindersListViewModelTest {
 
             //THEN SnackBar Show error message
             MatcherAssert.assertThat(
-                remindersListViewModel.showSnackBar.value, CoreMatchers.`is`("return testing error")
+                remindersListViewModel.showSnackBar.value, `is`("return testing error")
 
             )
         }
@@ -131,10 +131,10 @@ class RemindersListViewModelTest {
         //THEN load data
         val loadedItems = remindersListViewModel.remindersList.getOrAwaitValue()
         //we found there is no reminders and size equal to zero
-        MatcherAssert.assertThat(loadedItems.size, CoreMatchers.`is`(0))
+        MatcherAssert.assertThat(loadedItems.size, `is`(0))
 
         //showNoData equal true
-        MatcherAssert.assertThat(remindersListViewModel.showNoData.getOrAwaitValue(), CoreMatchers.`is`(true))
+        MatcherAssert.assertThat(remindersListViewModel.showNoData.getOrAwaitValue(), `is`(true))
     }
 
     private suspend fun saveReminder() {
