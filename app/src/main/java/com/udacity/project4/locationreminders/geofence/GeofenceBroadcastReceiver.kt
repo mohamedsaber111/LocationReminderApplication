@@ -13,11 +13,17 @@ import android.content.Intent
  * To do that you can use https://developer.android.com/reference/android/support/v4/app/JobIntentService to do that.
  *
  */
-
+//GeofenceBroadcastReceiver to send or receive message
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
-//TODO: implement the onReceive method to receive the geofencing events at the background
-
+        //onReceive method to receive geofencing events at background
+        if (intent.action == GEOFENCE_EVENT) {
+            GeofenceTransitionsJobIntentService.enqueueWork(context, intent)
+        }
+    }
+    companion object {
+        internal const val GEOFENCE_EVENT =
+            "GeofenceBroadcastReceiver.project4.action.ACTION_GEOFENCE_EVENT"
     }
 }
