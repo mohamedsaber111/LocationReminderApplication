@@ -15,6 +15,7 @@ interface RemindersDao {
     /**
      * @return all reminders.
      */
+
     @Query("SELECT * FROM reminders")
     suspend fun getReminders(): List<ReminderDTO>
 
@@ -22,6 +23,7 @@ interface RemindersDao {
      * @param reminderId the id of the reminder
      * @return the reminder object with the reminderId
      */
+
     @Query("SELECT * FROM reminders where entry_id = :reminderId")
     suspend fun getReminderById(reminderId: String): ReminderDTO?
 
