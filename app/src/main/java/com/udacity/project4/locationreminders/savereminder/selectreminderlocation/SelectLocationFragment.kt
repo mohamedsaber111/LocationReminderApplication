@@ -65,8 +65,38 @@ class SelectLocationFragment : BaseFragment() , OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         setLongClick(map)
+        setPoiClick(map)
+        setStyle(map)
     }
 
+    private fun setStyle(map: GoogleMap) {
+        try {
+            val mapStyle = map.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireContext(),
+                    R.raw.map_style
+                )
+            )
+            if (!mapStyle) {
+                Log.e("style", "Style failed")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e("style", "style didn't found, error is : ", e)
+        }
+    }
+
+    private fun setPoiClick(map: GoogleMap) {
+        map.setOnPoiClickListener { poi ->
+            val poiMarkerClick = map.addMarker(
+                MarkerOptions()
+                    .position(poi.latLng)
+                    .title(poi.name)
+            )
+            poiMarkerClick?.showInfoWindow()
+            selectMyLocation = poi.latLng
+            selectMyLocationDescription = poiMarkerClick?.title
+        }
+    }
     private fun setLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
             val snippet = String.format(
